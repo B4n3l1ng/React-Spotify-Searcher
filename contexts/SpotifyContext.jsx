@@ -12,7 +12,6 @@ const SpotifyContextProvider = ({ children }) => {
   const [redirectUri, setRedirectUri] = useState(REDIRECT_URI);
   const [authEndpoint, setAuthEndpoint] = useState(AUTH_ENDPOINT);
   const [responseType, setResponseType] = useState(RESPONSE_TYPE);
-
   const [token, setToken] = useState("");
 
   const getToken = () => {

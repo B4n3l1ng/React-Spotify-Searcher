@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
+import { Link, Route, Routes } from "react-router-dom";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 import "./App.css";
-import Search from "./components/Search";
+import ArtistSearch from "./components/ArtistSearch";
+import ArtistProfile from "./pages/ArtistProfile";
 
 function App() {
   const {
@@ -35,11 +37,25 @@ function App() {
             <div>
               <nav>
                 <h1>Searchly</h1>
+                <button>
+                  <Link to="/artist-search">Search for an artist</Link>
+                </button>
+                <button>
+                  <Link to="/album-search">Search for an album</Link>
+                </button>
+                <button>
+                  <Link to="/music-search">Search for a song</Link>
+                </button>
                 <button className="logOut" onClick={logout}>
                   Logout
                 </button>
               </nav>
-              <Search />
+              <div>
+                <Routes>
+                  <Route path="/artist-search" element={<ArtistSearch />} />
+                  <Route path="/artist/:artistId" element={<ArtistProfile />} />
+                </Routes>
+              </div>
             </div>
           )}
         </div>

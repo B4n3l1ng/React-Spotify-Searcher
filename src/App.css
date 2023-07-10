@@ -105,3 +105,64 @@ a {
   margin-top: 1%;
   font-size: larger;
 }
+
+.bandBio {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1vh auto;
+  background-color: rgba(31,214,96,255);
+  gap: 1vh;
+  padding-bottom: 1vh;
+}
+
+.bandBio  img {
+  width: 80%;
+  padding-top:1vh 
+}
+
+.bandBio a {
+  border: 1px solid black;
+  background-color: black;
+  padding: 5px;
+  border-radius: 24px;
+}
+
+.bandBio h1 {
+  font-size: 3rem;
+}
+
+.albumBox {
+  width: 30%;
+  border: 1px solid rgba(31,214,96,255);
+  padding: 1vh;
+  text-align: center;
+  background-color: rgba(31,214,96,255);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.albumBox h1 {
+  font-size: x-large;
+}
+
+.albumsContainer {
+  margin: 0 auto;
+  display: flex;
+  width: 80vw;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1vh;
+}
+.albumBox a {
+  border: 1px solid black;
+  background-color: black;
+  padding: 5px;
+  border-radius: 24px;
+}

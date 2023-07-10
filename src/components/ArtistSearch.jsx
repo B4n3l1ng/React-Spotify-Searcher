@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SpotifyContext } from "../../contexts/SpotifyContext";
 import Card from "../partials/Card";
 
-function Search() {
+function ArtistSearch() {
   const [searchKey, setSearchKey] = useState("");
   const [artists, setArtists] = useState([]);
   const { token } = useContext(SpotifyContext);
@@ -48,4 +48,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default ArtistSearch;
