@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import { SpotifyContext } from "../contexts/SpotifyContext";
+import { SpotifyContext } from "./contexts/SpotifyContext";
 import "./App.css";
 import ArtistSearch from "./components/ArtistSearch";
 import ArtistProfile from "./pages/ArtistProfile";

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext } from "react";
 import { useState } from "react";
-import { SpotifyContext } from "../../contexts/SpotifyContext";
+import { SpotifyContext } from "../contexts/SpotifyContext";
 import Card from "../partials/Card";
 
 function ArtistSearch() {

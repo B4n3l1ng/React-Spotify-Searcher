@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import { SpotifyContext } from "../../contexts/SpotifyContext";
+import { SpotifyContext } from "../contexts/SpotifyContext";
 import AlbumCard from "../partials/albumCard";
 
 function ArtistProfile() {
