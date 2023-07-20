@@ -4,8 +4,8 @@ function Card({ artists }) {
   return (
     <div className="cardContainer">
       {artists.map((artist) => (
-        <Link to={`/artist/${artist.id}`}>
-          <div className="card" key={artist.id}>
+        <Link to={`/artist/${artist.id}`} key={artist.id} className="card">
+          <div>
             {artist.images.length > 0 ? (
               <img src={artist.images[1].url} alt={artist.title} />
             ) : (

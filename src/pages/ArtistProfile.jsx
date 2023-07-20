@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyContext } from "../contexts/SpotifyContext";
@@ -10,18 +10,27 @@ function ArtistProfile() {
   const { token } = useContext(SpotifyContext);
   const [artistBio, setArtistBio] = useState();
   const [artistAlbums, setArtistAlbums] = useState([]);
+  const isMounted = useRef(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const artistInfo = async () => {
-    const { data } = await axios.get(
-      `https://api.spotify.com/v1/artists/${artistId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      const { data } = await axios.get(
+        `https://api.spotify.com/v1/artists/${artistId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setArtistBio(data);
+      isMounted.current = true;
+    } catch (error) {
+      if (error.code === 401) {
+        setErrorMessage("Your token has expired, please log in again.");
       }
-    );
-    setArtistBio(data);
+    }
   };
 
   const getArtistAlbums = async () => {
@@ -42,7 +51,6 @@ function ArtistProfile() {
         return album;
       }
     });
-    console.log(filtered);
     const sorted = filtered.sort((a, b) => {
       const yearA = parseInt(a.release_date.slice(0, 4));
       const yearB = parseInt(b.release_date.slice(0, 4));
@@ -69,17 +77,22 @@ function ArtistProfile() {
         }
       }
     });
-    console.log(sorted);
     setArtistAlbums(sorted);
   };
 
   useEffect(() => {
     artistInfo();
-    getArtistAlbums();
   }, [artistId]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      getArtistAlbums();
+    }
+  }, [artistBio]);
 
   return (
     <>
+      {errorMessage ? <p style={{ color: "red" }}>{errorMessage}</p> : null}
       {artistBio ? (
         <div className="bandBio">
           <img
@@ -88,7 +101,12 @@ function ArtistProfile() {
           />
           <h1>{artistBio.name}</h1>
           <h2>Followers: {artistBio.followers.total}</h2>
-          <a href={artistBio.external_urls.spotify}>Listen on Spotify</a>
+          <button className="spotifyButton">
+            <a href={artistBio.external_urls.spotify} target="_blank">
+              Listen on Spotify
+            </a>
+          </button>
+
           <p>
             Genres:{" "}
             {artistBio.genres.map((genre, index) => {

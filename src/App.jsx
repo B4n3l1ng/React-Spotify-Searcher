@@ -6,6 +6,7 @@ import { SpotifyContext } from "./contexts/SpotifyContext";
 import "./App.css";
 import ArtistSearch from "./components/ArtistSearch";
 import ArtistProfile from "./pages/ArtistProfile";
+import AlbumProfile from "./pages/AlbumProfile";
 
 function App() {
   const {
@@ -36,7 +37,7 @@ function App() {
           ) : (
             <div>
               <nav>
-                <h1>Searchly</h1>
+                <h1>Spotify Search</h1>
                 <button>
                   <Link to="/artist-search">Search for an artist</Link>
                 </button>
@@ -54,6 +55,7 @@ function App() {
                 <Routes>
                   <Route path="/artist-search" element={<ArtistSearch />} />
                   <Route path="/artist/:artistId" element={<ArtistProfile />} />
+                  <Route path="/albums/:albumId" element={<AlbumProfile />} />
                 </Routes>
               </div>
             </div>
