@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { SpotifyContext } from "../contexts/SpotifyContext";
-import SearchResultCard from "../partials/SearchResultCard";
+import SearchResultCard from "../components/SearchResultCard";
 
 function ArtistSearch() {
   const [searchKey, setSearchKey] = useState("");
