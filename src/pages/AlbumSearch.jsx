@@ -46,7 +46,7 @@ const AlbumSearch = () => {
       <div className="cardContainer">
         {albums.map((album) => {
           return (
-            <SearchResultCard item={album} key={album.id} typeOfItem="album" />
+            <SearchResultCard item={album} key={album.id} typeOfItem="albums" />
           );
         })}
       </div>
