@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyContext } from "../contexts/SpotifyContext";
-import AlbumCard from "../partials/albumCard";
+import AlbumCard from "../components/AlbumCard";
 
 function ArtistProfile() {
   const { artistId } = useParams();
