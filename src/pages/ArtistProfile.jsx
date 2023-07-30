@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyContext } from "../contexts/SpotifyContext";
@@ -7,15 +7,14 @@ import AlbumCard from "../partials/albumCard";
 
 function ArtistProfile() {
   const { artistId } = useParams();
-  const { token } = useContext(SpotifyContext);
+  const { token, logout } = useContext(SpotifyContext);
   const [artistBio, setArtistBio] = useState();
   const [artistAlbums, setArtistAlbums] = useState([]);
-  const isMounted = useRef(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   const artistInfo = async () => {
     try {
-      const { data } = await axios.get(
+      const response = await axios.get(
         `https://api.spotify.com/v1/artists/${artistId}`,
         {
           headers: {
@@ -24,11 +23,17 @@ function ArtistProfile() {
           },
         }
       );
-      setArtistBio(data);
-      isMounted.current = true;
-    } catch (error) {
-      if (error.code === 401) {
+      if (response.status === 401) {
         setErrorMessage("Your token has expired, please log in again.");
+      } else {
+        setArtistBio(response.data);
+      }
+    } catch (error) {
+      console.log("error here", error);
+      console.log("I'm here");
+      if (error.response.status === 401) {
+        setErrorMessage("Your token has expired, please log in again.");
+        logout();
       }
     }
   };
@@ -85,14 +90,16 @@ function ArtistProfile() {
   }, [artistId]);
 
   useEffect(() => {
-    if (isMounted.current) {
+    if (artistBio) {
       getArtistAlbums();
     }
   }, [artistBio]);
 
   return (
     <>
-      {errorMessage ? <p style={{ color: "red" }}>{errorMessage}</p> : null}
+      {errorMessage ? (
+        <p style={{ color: "red" }}>{errorMessage}</p>
+      ) : undefined}
       {artistBio ? (
         <div className="bandBio">
           <img

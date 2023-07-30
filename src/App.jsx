@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
 import { SpotifyContext } from "./contexts/SpotifyContext";
 import "./App.css";
-import ArtistSearch from "./components/ArtistSearch";
+import ArtistSearch from "./pages/ArtistSearch";
 import ArtistProfile from "./pages/ArtistProfile";
 import AlbumProfile from "./pages/AlbumProfile";
+import HomePage from "./pages/HomePage";
+import AlbumSearch from "./pages/AlbumSearch";
 
 function App() {
   const {
@@ -25,7 +27,9 @@ function App() {
         <div className="SearchContainer">
           {!token ? (
             <nav>
-              <h1>Searchly</h1>
+              <h1>
+                <NavLink to="/">Spotify Search</NavLink>
+              </h1>
               <button>
                 <a
                   href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}`}
@@ -37,15 +41,17 @@ function App() {
           ) : (
             <div>
               <nav>
-                <h1>Spotify Search</h1>
+                <h1>
+                  <NavLink to="/">Spotify Search</NavLink>
+                </h1>
                 <button>
-                  <Link to="/artist-search">Search for an artist</Link>
+                  <NavLink to="/artist-search">Search for an artist</NavLink>
                 </button>
                 <button>
-                  <Link to="/album-search">Search for an album</Link>
+                  <NavLink to="/album-search">Search for an album</NavLink>
                 </button>
                 <button>
-                  <Link to="/music-search">Search for a song</Link>
+                  <NavLink to="/music-search">Search for a song</NavLink>
                 </button>
                 <button className="logOut" onClick={logout}>
                   Logout
@@ -53,8 +59,10 @@ function App() {
               </nav>
               <div>
                 <Routes>
+                  <Route path="/" element={<HomePage />} />
                   <Route path="/artist-search" element={<ArtistSearch />} />
                   <Route path="/artist/:artistId" element={<ArtistProfile />} />
+                  <Route path="/album-search" element={<AlbumSearch />} />
                   <Route path="/albums/:albumId" element={<AlbumProfile />} />
                 </Routes>
               </div>

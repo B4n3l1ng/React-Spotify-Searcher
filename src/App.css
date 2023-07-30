@@ -84,6 +84,10 @@ button > a {
   color: rgba(31,214,96,255)
 }
 
+.homepage h1{
+  font-size: xx-large;
+  margin-top: 2%;
+}
 
 .cardContainer {
   display: flex;
@@ -108,11 +112,11 @@ button > a {
   align-items: center;
   min-width: 320px;
   min-height: 320px;
-  padding-top: 3%
 }
 .card img {
+  height: 250px;
+  width: 250px;
   max-width: 90%;
-  max-height: 90%;
 }
 
 .card h2 {
@@ -185,4 +189,18 @@ tr {
 
 .albumTracks td {
   margin: 100px
+}
+
+nav h1 a {
+  text-decoration: none;
+  color: black;
+  font-size: x-large;
+}
+
+.homepage div{
+  margin: 2%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2%
 }
