@@ -29,7 +29,7 @@ nav {
   padding: 1vh;
   border: 1px solid rgba(31,214,96,255);
   background-color: rgba(31,214,96,255);
-  width: 100vw;
+  max-width: 100vw;
 }
 
 nav h1 a {
