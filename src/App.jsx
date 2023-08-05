@@ -44,16 +44,19 @@ function App() {
             <div>
               <nav>
                 <h1>
-                  <NavLink to="/">Spotify Search</NavLink>
+                  <NavLink to="/">
+                    <span>Spotify</span>
+                    <span>Search</span>
+                  </NavLink>
                 </h1>
                 <button>
-                  <NavLink to="/artist-search">Search for an artist</NavLink>
+                  <NavLink to="/artist-search">Artist Search</NavLink>
                 </button>
                 <button>
-                  <NavLink to="/album-search">Search for an album</NavLink>
+                  <NavLink to="/album-search">Album search</NavLink>
                 </button>
                 <button>
-                  <NavLink to="/track-search">Search for a song</NavLink>
+                  <NavLink to="/track-search">Song search</NavLink>
                 </button>
                 <button className="logOut" onClick={logout}>
                   Logout

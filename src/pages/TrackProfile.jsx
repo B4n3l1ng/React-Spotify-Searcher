@@ -10,6 +10,7 @@ const TrackProfile = () => {
   const [track, setTrack] = useState();
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [lyrics, setLyrics] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const trackInfo = async () => {
     try {
@@ -41,8 +42,10 @@ const TrackProfile = () => {
           `https://some-random-api.com/lyrics/?title=${track.name.trim()}/`
         );
         setLyrics(response.data.lyrics);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     }
   };
@@ -95,14 +98,7 @@ const TrackProfile = () => {
               Listen on Spotify
             </a>
           </button>
-          {lyrics ? (
-            <>
-              <h2>Lyrics:</h2>
-              <p style={{ whiteSpace: "pre-line", textAlign: "center" }}>
-                {lyrics}
-              </p>
-            </>
-          ) : (
+          {isLoading ? (
             <div className="lds-spinner" style={{ margin: "2em" }}>
               <div></div>
               <div></div>
@@ -117,6 +113,15 @@ const TrackProfile = () => {
               <div></div>
               <div></div>
             </div>
+          ) : !lyrics ? (
+            <p>Unable to fetch lyrics for current track</p>
+          ) : (
+            <>
+              <h2>Lyrics:</h2>
+              <p style={{ whiteSpace: "pre-line", textAlign: "center" }}>
+                {lyrics}
+              </p>
+            </>
           )}
         </div>
       ) : null}
