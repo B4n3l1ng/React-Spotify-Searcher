@@ -9,6 +9,8 @@ import ArtistProfile from "./pages/ArtistProfile";
 import AlbumProfile from "./pages/AlbumProfile";
 import HomePage from "./pages/HomePage";
 import AlbumSearch from "./pages/AlbumSearch";
+import MusicSearch from "./pages/MusicSearch";
+import TrackProfile from "./pages/TrackProfile";
 
 function App() {
   const {
@@ -51,7 +53,7 @@ function App() {
                   <NavLink to="/album-search">Search for an album</NavLink>
                 </button>
                 <button>
-                  <NavLink to="/music-search">Search for a song</NavLink>
+                  <NavLink to="/track-search">Search for a song</NavLink>
                 </button>
                 <button className="logOut" onClick={logout}>
                   Logout
@@ -64,6 +66,8 @@ function App() {
                   <Route path="/artist/:artistId" element={<ArtistProfile />} />
                   <Route path="/album-search" element={<AlbumSearch />} />
                   <Route path="/albums/:albumId" element={<AlbumProfile />} />
+                  <Route path="/track-search" element={<MusicSearch />} />
+                  <Route path="/tracks/:trackId" element={<TrackProfile />} />
                 </Routes>
               </div>
             </div>

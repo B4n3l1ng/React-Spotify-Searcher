@@ -84,6 +84,7 @@ function AlbumProfile() {
               <th>Track Duration</th>
               <th>Track Preview</th>
               <th>Spotify link</th>
+              <th>Song Profile</th>
             </tr>
           </thead>
           <tbody>
@@ -109,6 +110,11 @@ function AlbumProfile() {
                       <a href={track.external_urls.spotify} target="_blank">
                         Listen
                       </a>
+                    </button>
+                  </td>
+                  <td>
+                    <button className="spotifyButton">
+                      <Link to={`/tracks/${track.id}`}>Profile</Link>
                     </button>
                   </td>
                 </tr>

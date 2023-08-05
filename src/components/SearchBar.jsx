@@ -1,9 +1,10 @@
-const SearchBar = ({ setSearchKey, handleSearch, searchingFor }) => {
+const SearchBar = ({ searchKey, setSearchKey, handleSearch, searchingFor }) => {
   return (
     <div className="search">
       <input
         className="name"
         type="text"
+        value={searchKey}
         placeholder={`Search by ${searchingFor} name...`}
         onChange={(e) => {
           setSearchKey(e.target.value);

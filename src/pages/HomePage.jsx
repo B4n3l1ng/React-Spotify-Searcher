@@ -12,7 +12,7 @@ const HomePage = () => {
           <Link to="album-search">Search for an album</Link>
         </button>
         <button className="spotifyButton">
-          <Link to="music-search">Search for a song</Link>
+          <Link to="track-search">Search for a song</Link>
         </button>
       </div>
     </div>

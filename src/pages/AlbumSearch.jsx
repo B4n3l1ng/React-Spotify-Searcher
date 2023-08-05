@@ -36,6 +36,7 @@ const AlbumSearch = () => {
   return (
     <>
       <SearchBar
+        searchKey={searchKey}
         setSearchKey={setSearchKey}
         handleSearch={searchAlbum}
         searchingFor="Album"

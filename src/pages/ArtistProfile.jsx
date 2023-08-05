@@ -23,17 +23,14 @@ function ArtistProfile() {
           },
         }
       );
-      if (response.status === 401) {
-        setErrorMessage("Your token has expired, please log in again.");
-      } else {
-        setArtistBio(response.data);
-      }
+      setArtistBio(response.data);
     } catch (error) {
-      console.log("error here", error);
-      console.log("I'm here");
-      if (error.response.status === 401) {
-        setErrorMessage("Your token has expired, please log in again.");
-        logout();
+      console.log("error", error);
+      if (error.response.data.status === 401) {
+        setErrorMessage(error.response.data.error.message);
+        return setTimeout(() => {
+          logout();
+        }, 3000);
       }
     }
   };
