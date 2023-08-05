@@ -302,4 +302,8 @@ nav h1 a {
   .albumBox {
     width: 70vw
   }
+
+  .audioTag {
+    display: none;
+  }
 }

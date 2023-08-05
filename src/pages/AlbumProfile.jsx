@@ -82,7 +82,7 @@ function AlbumProfile() {
               <th>Song</th>
               <th>Track Number</th>
               <th>Track Duration</th>
-              <th>Track Preview</th>
+              <th className="audioTag">Track Preview</th>
               <th>Spotify link</th>
               <th>Song Profile</th>
             </tr>
@@ -94,7 +94,7 @@ function AlbumProfile() {
                   <td>{track.name}</td>
                   <td>{track.track_number}</td>
                   <td>{duration(track.duration_ms)}</td>
-                  <td>
+                  <td className="audioTag">
                     {track.preview_url ? (
                       <audio
                         src={track.preview_url}
