@@ -1,8 +1,10 @@
+import { Input, Button } from "@mantine/core";
 const SearchBar = ({ searchKey, setSearchKey, handleSearch, searchingFor }) => {
   return (
     <div className="search">
-      <input
-        className="name"
+      <Input
+        radius="xl"
+        className="searchInput"
         type="text"
         value={searchKey}
         placeholder={`Search by ${searchingFor} name...`}
@@ -16,7 +18,9 @@ const SearchBar = ({ searchKey, setSearchKey, handleSearch, searchingFor }) => {
           }
         }}
       />
-      <button onClick={handleSearch}>Search</button>
+      <Button color="green" radius="xl" size="md" onClick={handleSearch}>
+        Search
+      </Button>
     </div>
   );
 };

@@ -4,12 +4,14 @@ import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 import SearchResultCard from "../components/SearchResultCard";
+import { Flex, Title } from "@mantine/core";
 
 function ArtistSearch() {
   const [searchKey, setSearchKey] = useState("");
   const [artists, setArtists] = useState([]);
   const { token, logout } = useContext(SpotifyContext);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoaded, setisLoaded] = useState(false);
   const searchArtist = async () => {
     try {
       const { data } = await axios.get("https://api.spotify.com/v1/search", {
@@ -22,8 +24,8 @@ function ArtistSearch() {
           type: "artist",
         },
       });
-      console.log(data);
       setArtists(data.artists.items);
+      setisLoaded(true);
     } catch (error) {
       console.log("error", error);
       if (error.response.data.error.status === 401) {
@@ -36,7 +38,7 @@ function ArtistSearch() {
     }
   };
   return (
-    <>
+    <div className="searchResults">
       <SearchBar
         searchKey={searchKey}
         setSearchKey={setSearchKey}
@@ -46,7 +48,20 @@ function ArtistSearch() {
       {errorMessage ? (
         <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
       ) : undefined}
-      <div className="cardContainer">
+      {isLoaded ? (
+        <Title order={1} align="center">
+          Here are the search results for {searchKey}
+        </Title>
+      ) : undefined}
+      <Flex
+        mih={50}
+        gap="md"
+        justify="center"
+        align="center"
+        direction="row"
+        wrap="wrap"
+        style={{ marginTop: "1%" }}
+      >
         {artists.map((artist) => {
           return (
             <SearchResultCard
@@ -56,8 +71,8 @@ function ArtistSearch() {
             />
           );
         })}
-      </div>
-    </>
+      </Flex>
+    </div>
   );
 }
 

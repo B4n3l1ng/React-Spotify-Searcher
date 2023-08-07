@@ -4,11 +4,13 @@ import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 import SearchResultCard from "../components/SearchResultCard";
+import { Flex, Title } from "@mantine/core";
 const AlbumSearch = () => {
   const [searchKey, setSearchKey] = useState("");
   const [albums, setAlbums] = useState([]);
   const { token, logout } = useContext(SpotifyContext);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const searchAlbum = async () => {
     try {
@@ -22,13 +24,15 @@ const AlbumSearch = () => {
           type: "album",
         },
       });
-      console.log(data.albums.items);
       setAlbums(data.albums.items);
+      setIsLoaded(true);
     } catch (error) {
       console.log("error", error);
-      if (error.response.status === 401) {
-        setErrorMessage("Your token has expired, please log in again.");
-        setTimeout(logout(), 3000);
+      if (error.response.data.error.status === 401) {
+        setErrorMessage(error.response.data.error.message);
+        return setTimeout(() => {
+          logout();
+        }, 3000);
       }
     }
   };
@@ -44,13 +48,26 @@ const AlbumSearch = () => {
       {errorMessage ? (
         <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
       ) : undefined}
-      <div className="cardContainer">
+      {isLoaded ? (
+        <Title order={1} align="center">
+          Here are the search results for {searchKey}
+        </Title>
+      ) : undefined}
+      <Flex
+        mih={50}
+        gap="md"
+        justify="center"
+        align="center"
+        direction="row"
+        wrap="wrap"
+        style={{ marginTop: "1%" }}
+      >
         {albums.map((album) => {
           return (
             <SearchResultCard item={album} key={album.id} typeOfItem="albums" />
           );
         })}
-      </div>
+      </Flex>
     </>
   );
 };
