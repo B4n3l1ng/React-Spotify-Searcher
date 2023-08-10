@@ -31,7 +31,6 @@ const TrackCard = ({ track, album, bg, c }) => {
     >
       <Card.Section>
         <Image
-          style={{ textAlign: "center" }}
           height={460}
           width={460}
           src={

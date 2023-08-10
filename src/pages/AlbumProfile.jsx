@@ -111,7 +111,7 @@ function AlbumProfile() {
               maw={400}
               mx="auto"
               withIndicators
-              height={650}
+              height={800}
               slideGap="md"
               controlSize={30}
               loop

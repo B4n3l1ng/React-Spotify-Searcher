@@ -3,17 +3,11 @@ import { Link } from "react-router-dom";
 
 function AlbumCard({ album }) {
   return (
-    <Card
-      shadow="sm"
-      padding="lg"
-      radius="md"
-      withBorder
-      height="xl"
-      bg="#000000"
-    >
+    <Card shadow="sm" padding="lg" radius="md" withBorder height="xl" bg="#fff">
       <Card.Section>
         <Image
-          height={300}
+          height={460}
+          width={460}
           src={
             album.images.length
               ? album.images[1].url

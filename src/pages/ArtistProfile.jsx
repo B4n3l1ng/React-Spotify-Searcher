@@ -149,10 +149,10 @@ function ArtistProfile() {
           <Title style={{ color: "white" }}>Albums:</Title>
           <Carousel
             controlsOffset="xs"
-            maw={320}
+            maw={400}
             mx="auto"
             withIndicators
-            height={600}
+            height={800}
             slideGap="md"
             controlSize={30}
             loop
