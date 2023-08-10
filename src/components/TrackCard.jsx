@@ -21,6 +21,7 @@ const TrackCard = ({ track, album, bg, c }) => {
       withBorder
       bg={bg ? "#000000" : "#fff"}
       c={c ? "#fff" : "#000000"}
+      pt={album ? "sm" : null}
       style={{
         marginBottom: "1em",
         display: "flex",

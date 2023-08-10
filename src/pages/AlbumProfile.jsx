@@ -63,6 +63,7 @@ function AlbumProfile() {
           >
             <Card.Section>
               <Image
+                pt="sm"
                 height={460}
                 width={460}
                 fit="contain"

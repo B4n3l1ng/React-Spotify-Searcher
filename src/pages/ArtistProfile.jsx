@@ -115,6 +115,7 @@ function ArtistProfile() {
         >
           <Card.Section>
             <Image
+              pt="sm"
               height={460}
               width={460}
               fit="contain"
@@ -125,13 +126,13 @@ function ArtistProfile() {
           <Card.Section>
             <Title weight={700}>{artistBio.name}</Title>
             <h2>Followers: {artistBio.followers.total}</h2>
-            <Button color="green" radius="xl" size="md">
+            <Button color="green" radius="xl" size="md" mb="sm">
               <a href={artistBio.external_urls.spotify} target="_blank">
                 Listen on Spotify
               </a>
             </Button>
 
-            <Text>
+            <Text mb="sm">
               Genres:{" "}
               {artistBio.genres.map((genre, index) => {
                 if (index !== artistBio.genres.length - 1) {
