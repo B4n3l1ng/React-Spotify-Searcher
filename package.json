@@ -11,17 +11,16 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
-    "@mantine/carousel": "^6.0.18",
-    "@mantine/core": "^6.0.17",
-    "@mantine/hooks": "^6.0.17",
+    "@mantine/carousel": "^6.0.19",
+    "@mantine/core": "^6.0.19",
+    "@mantine/hooks": "^6.0.19",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
-    "embla-carousel-react": "^8.0.0-rc11",
+    "embla-carousel-react": "^7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.14.1"
-  },
-  "devDependencies": {
+    "react-router-dom": "^6.15.0"
+  },"devDependencies": {
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react": "^4.0.1",
