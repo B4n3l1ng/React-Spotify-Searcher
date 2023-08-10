@@ -1,12 +1,15 @@
+import { Carousel } from "@mantine/carousel";
+import { Button, Card, CardSection, Image, Text, Title } from "@mantine/core";
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import TrackCard from "../components/TrackCard";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 
 function AlbumProfile() {
   const [albumBio, setAlbumBio] = useState();
-  const { token } = useContext(SpotifyContext);
-
+  const { token, logout } = useContext(SpotifyContext);
+  const navigate = useNavigate();
   const { albumId } = useParams();
   const [errorMessage, setErrorMessage] = useState(null);
   const [tracks, setTracks] = useState([]);
@@ -27,103 +30,105 @@ function AlbumProfile() {
       setTracks(data.tracks.items);
     } catch (error) {
       console.log(error);
-      if (error.code === 401) {
-        setErrorMessage("Your token has expired, please login again.");
+      if (error.response.data.error.status === 401) {
+        console.log("inhere");
+        setErrorMessage(error.response.data.error.message);
+        return setTimeout(() => {
+          logout();
+          navigate("/");
+        }, 3000);
       }
     }
-  };
-
-  const duration = (millis) => {
-    let minutes = Math.floor(millis / 60000);
-    let seconds = ((millis % 60000) / 1000).toFixed(0);
-    return `${minutes}:${(seconds < 10 ? "0" : "") + seconds}`;
   };
 
   useEffect(() => {
     fetchAlbum();
   }, []);
 
-  useEffect(() => {
-    const audio = document.querySelectorAll(".audioControl");
-    audio.forEach((audio) => (audio.volume = 0.01));
-  }, [tracks]);
+  console.log(tracks);
+
   return (
-    <>
+    <div style={{ textAlign: "center" }}>
       {errorMessage ? <p style={{ color: "red" }}>{errorMessage}</p> : null}
       <div>
         {albumBio ? (
-          <div className="bandBio">
-            <img
-              src={albumBio.images ? albumBio.images[0].url : ""}
-              alt={albumBio.name}
-            />
-            <h1>{albumBio.name}</h1>
-            <h2>
-              By{" "}
-              <Link to={`/artist/${albumBio.artists[0].id}`}>
-                {albumBio.artists[0].name}
-              </Link>
-            </h2>
-            <button className="spotifyButton">
-              <a href={albumBio.external_urls.spotify} target="_blank">
-                Listen on Spotify
-              </a>
-            </button>
-            <h2>Label: {albumBio.label}</h2>
-            <h3>Popularity: {albumBio.popularity}</h3>
-            <h3>Total Tracks: {albumBio.total_tracks}</h3>
-          </div>
+          <Card
+            shadow="sm"
+            padding="lg"
+            radius="md"
+            style={{
+              marginBottom: "1em",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Card.Section>
+              <Image
+                height={460}
+                width={460}
+                fit="contain"
+                src={albumBio.images ? albumBio.images[0].url : ""}
+                alt={albumBio.name}
+              />
+            </Card.Section>
+            <Card.Section p="sm">
+              <Title weight={700} pb="sm">
+                {albumBio.name}
+              </Title>
+              <Text color="#000000" pb="sm">
+                <Link
+                  to={`/artist/${albumBio.artists[0].id}`}
+                  style={{ color: "black", textDecoration: "underline" }}
+                >
+                  {albumBio.artists[0].name}
+                </Link>
+              </Text>
+              <Button color="green" radius="xl" size="md" mb="sm">
+                <a href={albumBio.external_urls.spotify} target="_blank">
+                  Listen on Spotify
+                </a>
+              </Button>
+              <Text weight={500} mb="sm">
+                Label: {albumBio.label}
+              </Text>
+              <Text weight={500} mb="sm">
+                Popularity: {albumBio.popularity}
+              </Text>
+              <Text weight={500} mb="sm">
+                Total Tracks: {albumBio.total_tracks}
+              </Text>
+            </Card.Section>
+          </Card>
         ) : null}
       </div>
       <div>
-        <table className="albumTracks">
-          <thead>
-            <tr>
-              <th>Song</th>
-              <th>Track Number</th>
-              <th>Track Duration</th>
-              <th className="audioTag">Track Preview</th>
-              <th>Spotify link</th>
-              <th>Song Profile</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tracks.map((track) => {
-              return (
-                <tr key={track.id}>
-                  <td>{track.name}</td>
-                  <td>{track.track_number}</td>
-                  <td>{duration(track.duration_ms)}</td>
-                  <td className="audioTag">
-                    {track.preview_url ? (
-                      <audio
-                        src={track.preview_url}
-                        controls
-                        className="audioControl"
-                      />
-                    ) : (
-                      <span>Preview not available</span>
-                    )}
-                  </td>
-                  <td>
-                    <button className="spotifyButton">
-                      <a href={track.external_urls.spotify} target="_blank">
-                        Listen
-                      </a>
-                    </button>
-                  </td>
-                  <td>
-                    <button className="spotifyButton">
-                      <Link to={`/tracks/${track.id}`}>Profile</Link>
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {tracks.length !== 0 ? (
+          <>
+            <Title weight={700} pb="sm">
+              Tracks:
+            </Title>
+            <Carousel
+              controlsOffset="xs"
+              maw={400}
+              mx="auto"
+              withIndicators
+              height={650}
+              slideGap="md"
+              controlSize={30}
+              loop
+            >
+              {tracks.map((track) => (
+                <Carousel.Slide size="100%" key={track.id}>
+                  <TrackCard track={track} album={albumBio} />
+                </Carousel.Slide>
+              ))}
+            </Carousel>
+          </>
+        ) : undefined}
       </div>
-    </>
+    </div>
   );
 }
 

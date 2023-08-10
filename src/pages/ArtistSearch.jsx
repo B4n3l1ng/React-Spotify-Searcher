@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 import SearchResultCard from "../components/SearchResultCard";
 import { Flex, Title } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 function ArtistSearch() {
   const [searchKey, setSearchKey] = useState("");
@@ -12,6 +13,8 @@ function ArtistSearch() {
   const { token, logout } = useContext(SpotifyContext);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isLoaded, setisLoaded] = useState(false);
+  const [searchTitle, setsearchTitle] = useState("");
+  const navigate = useNavigate();
   const searchArtist = async () => {
     try {
       const { data } = await axios.get("https://api.spotify.com/v1/search", {
@@ -25,6 +28,7 @@ function ArtistSearch() {
         },
       });
       setArtists(data.artists.items);
+      setsearchTitle(searchKey);
       setisLoaded(true);
     } catch (error) {
       console.log("error", error);
@@ -33,6 +37,7 @@ function ArtistSearch() {
         setErrorMessage(error.response.data.error.message);
         return setTimeout(() => {
           logout();
+          navigate("/");
         }, 3000);
       }
     }
@@ -49,8 +54,8 @@ function ArtistSearch() {
         <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
       ) : undefined}
       {isLoaded ? (
-        <Title order={1} align="center">
-          Here are the search results for {searchKey}
+        <Title order={1} align="center" color="#fff">
+          Here are the search results for {searchTitle}
         </Title>
       ) : undefined}
       <Flex

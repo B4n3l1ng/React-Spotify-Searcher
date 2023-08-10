@@ -64,6 +64,15 @@ input {
   margin-bottom: 2%;
 }
 
+.albumCardInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  color: white
+}
+
 .lds-spinner {
   color: official;
   display: inline-block;

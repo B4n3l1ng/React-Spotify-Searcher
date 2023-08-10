@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 import AlbumCard from "../components/AlbumCard";
+import { Image, Card, Flex, Text, Button, Title } from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
 
 function ArtistProfile() {
   const { artistId } = useParams();
@@ -11,7 +13,7 @@ function ArtistProfile() {
   const [artistBio, setArtistBio] = useState();
   const [artistAlbums, setArtistAlbums] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
-
+  const navigate = useNavigate();
   const artistInfo = async () => {
     try {
       const response = await axios.get(
@@ -26,10 +28,12 @@ function ArtistProfile() {
       setArtistBio(response.data);
     } catch (error) {
       console.log("error", error);
-      if (error.response.data.status === 401) {
+      if (error.response.data.error.status === 401) {
+        console.log("inhere");
         setErrorMessage(error.response.data.error.message);
         return setTimeout(() => {
           logout();
+          navigate("/");
         }, 3000);
       }
     }
@@ -93,42 +97,94 @@ function ArtistProfile() {
   }, [artistBio]);
 
   return (
-    <>
+    <div style={{ textAlign: "center" }}>
       {errorMessage ? (
         <p style={{ color: "red" }}>{errorMessage}</p>
       ) : undefined}
       {artistBio ? (
-        <div className="bandBio">
-          <img
-            src={artistBio.images ? artistBio.images[0].url : ""}
-            alt={artistBio.name}
-          />
-          <h1>{artistBio.name}</h1>
-          <h2>Followers: {artistBio.followers.total}</h2>
-          <button className="spotifyButton">
-            <a href={artistBio.external_urls.spotify} target="_blank">
-              Listen on Spotify
-            </a>
-          </button>
+        <Card
+          shadow="sm"
+          padding="lg"
+          radius="md"
+          style={{
+            marginBottom: "1em",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Card.Section>
+            <Image
+              height={460}
+              width={460}
+              fit="contain"
+              src={artistBio.images ? artistBio.images[0].url : ""}
+              alt={artistBio.name}
+            />
+          </Card.Section>
+          <Card.Section>
+            <Title weight={700}>{artistBio.name}</Title>
+            <h2>Followers: {artistBio.followers.total}</h2>
+            <Button color="green" radius="xl" size="md">
+              <a href={artistBio.external_urls.spotify} target="_blank">
+                Listen on Spotify
+              </a>
+            </Button>
 
-          <p>
-            Genres:{" "}
-            {artistBio.genres.map((genre, index) => {
-              if (index !== artistBio.genres.length - 1) {
-                return <span key={genre}>{genre}, </span>;
-              } else {
-                return <span key={genre}>{genre}.</span>;
-              }
-            })}
-          </p>
-        </div>
+            <Text>
+              Genres:{" "}
+              {artistBio.genres.map((genre, index) => {
+                if (index !== artistBio.genres.length - 1) {
+                  return <span key={genre}>{genre}, </span>;
+                } else {
+                  return <span key={genre}>{genre}.</span>;
+                }
+              })}
+            </Text>
+          </Card.Section>
+        </Card>
       ) : null}
-      <div className="albumsContainer">
-        {artistAlbums.map((album) => {
-          return <AlbumCard album={album} key={album.id} />;
-        })}
-      </div>
-    </>
+      {artistAlbums.length !== 0 ? (
+        <>
+          <Title style={{ color: "white" }}>Albums:</Title>
+          <Carousel
+            controlsOffset="xs"
+            maw={320}
+            mx="auto"
+            withIndicators
+            height={600}
+            slideGap="md"
+            controlSize={30}
+            loop
+            className="albumsContainer"
+          >
+            {artistAlbums.map((album) => {
+              return (
+                <Carousel.Slide size="100%" key={album.id}>
+                  <AlbumCard album={album} />
+                </Carousel.Slide>
+              );
+            })}
+          </Carousel>
+        </>
+      ) : (
+        <div className="lds-spinner" style={{ margin: "2em" }}>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      )}
+    </div>
   );
 }
 

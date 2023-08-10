@@ -11,6 +11,7 @@ const AlbumSearch = () => {
   const { token, logout } = useContext(SpotifyContext);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [searchTitle, setsearchTitle] = useState("");
 
   const searchAlbum = async () => {
     try {
@@ -25,6 +26,7 @@ const AlbumSearch = () => {
         },
       });
       setAlbums(data.albums.items);
+      setsearchTitle(searchKey);
       setIsLoaded(true);
     } catch (error) {
       console.log("error", error);
@@ -32,6 +34,7 @@ const AlbumSearch = () => {
         setErrorMessage(error.response.data.error.message);
         return setTimeout(() => {
           logout();
+          navigate("/");
         }, 3000);
       }
     }
@@ -49,8 +52,8 @@ const AlbumSearch = () => {
         <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
       ) : undefined}
       {isLoaded ? (
-        <Title order={1} align="center">
-          Here are the search results for {searchKey}
+        <Title order={1} align="center" color="#fff">
+          Here are the search results for {searchTitle}
         </Title>
       ) : undefined}
       <Flex

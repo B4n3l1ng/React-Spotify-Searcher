@@ -1,27 +1,43 @@
+import { Button, Card, Image, Text } from "@mantine/core";
 import { Link } from "react-router-dom";
 
 function AlbumCard({ album }) {
   return (
-    <div className="albumBox">
-      {album.images.length ? (
-        <img src={album.images[1].url} alt={album.name} />
-      ) : (
-        <img src="https://placehold.co/320x320" alt={album.name} />
-      )}
-      <h1>{album.name}</h1>
-      <button className="spotifyButton">
-        <a href={album.external_urls.spotify} target="_blank">
-          Listen on Spotify
-        </a>
-      </button>
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="md"
+      withBorder
+      height="xl"
+      bg="#000000"
+    >
+      <Card.Section>
+        <Image
+          height={300}
+          src={
+            album.images.length
+              ? album.images[1].url
+              : "https://placehold.co/320x320"
+          }
+          alt={album.name}
+        />
+      </Card.Section>
+      <Card.Section className="albumCardInfo">
+        <Text weight={500}>{album.name}</Text>
+        <Button color="green" radius="xl" size="md">
+          <a href={album.external_urls.spotify} target="_blank">
+            Listen on Spotify
+          </a>
+        </Button>
 
-      <button className="spotifyButton">
-        <Link to={`/albums/${album.id}`}>Album Profile</Link>
-      </button>
+        <Button color="green" radius="xl" size="md">
+          <Link to={`/albums/${album.id}`}>Album Profile</Link>
+        </Button>
 
-      <p>Release date: {album.release_date}</p>
-      <p>Total tracks: {album.total_tracks}</p>
-    </div>
+        <Text>Release date: {album.release_date}</Text>
+        <Text>Total tracks: {album.total_tracks}</Text>
+      </Card.Section>
+    </Card>
   );
 }
 
