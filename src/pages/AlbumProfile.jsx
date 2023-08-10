@@ -31,7 +31,6 @@ function AlbumProfile() {
     } catch (error) {
       console.log(error);
       if (error.response.data.error.status === 401) {
-        console.log("inhere");
         setErrorMessage(error.response.data.error.message);
         return setTimeout(() => {
           logout();
@@ -44,8 +43,6 @@ function AlbumProfile() {
   useEffect(() => {
     fetchAlbum();
   }, []);
-
-  console.log(tracks);
 
   return (
     <div style={{ textAlign: "center" }}>

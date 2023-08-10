@@ -1,7 +1,9 @@
+import { Text, Title } from "@mantine/core";
 import axios from "axios";
 import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import TrackCard from "../components/TrackCard";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 
 const TrackProfile = () => {
@@ -72,34 +74,12 @@ const TrackProfile = () => {
         <p style={{ color: "red" }}>{errorMessage}</p>
       ) : undefined}
       {track ? (
-        <div className="bandBio">
-          <img
-            src={track.album.images ? track.album.images[0].url : ""}
-            alt={track.album.name}
-          />
-          <h1>{track.name}</h1>
+        <div style={{ textAlign: "center" }}>
+          <TrackCard track={track} />
 
-          <Link to={`/artist/${track.artists[0].id}`}>
-            <h1>{track.artists[0].name}</h1>
-          </Link>
-          <p>
-            From the album:{" "}
-            <Link to={`/albums/${track.album.id}`}>{track.album.name}</Link>
-          </p>
-          <p>Duration: {duration(track.duration_ms)}</p>
-          <p>Popularity: {track.popularity}</p>
-          {track.preview_url ? (
-            <audio src={track.preview_url} controls className="audioControl" />
-          ) : (
-            <span>Preview not available</span>
-          )}
-          <button className="spotifyButton" type="button">
-            <a href={track.external_urls.spotify} target="_blank">
-              Listen on Spotify
-            </a>
-          </button>
           {isLoading ? (
             <div className="lds-spinner" style={{ margin: "2em" }}>
+              Lyrics are loading...
               <div></div>
               <div></div>
               <div></div>
@@ -114,13 +94,17 @@ const TrackProfile = () => {
               <div></div>
             </div>
           ) : !lyrics ? (
-            <p>Unable to fetch lyrics for current track</p>
+            <Text>Unable to fetch lyrics for current track</Text>
           ) : (
             <>
-              <h2>Lyrics:</h2>
-              <p style={{ whiteSpace: "pre-line", textAlign: "center" }}>
+              <Title m="sm">Lyrics:</Title>
+              <Text
+                style={{ whiteSpace: "pre-line", textAlign: "center" }}
+                mb="sm"
+                c="#fff"
+              >
                 {lyrics}
-              </p>
+              </Text>
             </>
           )}
         </div>

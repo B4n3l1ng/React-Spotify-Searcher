@@ -33,7 +33,6 @@ function ArtistSearch() {
     } catch (error) {
       console.log("error", error);
       if (error.response.data.error.status === 401) {
-        console.log("inhere");
         setErrorMessage(error.response.data.error.message);
         return setTimeout(() => {
           logout();
