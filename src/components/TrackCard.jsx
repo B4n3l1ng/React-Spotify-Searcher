@@ -2,7 +2,9 @@ import { Button, Card, Container, Image, Text } from "@mantine/core";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const TrackCard = ({ track, album, bg, c }) => {
+const TrackCard = ({ track, album, bg = undefined, c = undefined }) => {
+  console.log(album);
+  console.log(track);
   const duration = (millis) => {
     let minutes = Math.floor(millis / 60000);
     let seconds = ((millis % 60000) / 1000).toFixed(0);

@@ -2,7 +2,7 @@ import { Text, Title } from "@mantine/core";
 import axios from "axios";
 import { useEffect } from "react";
 import { useContext, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import TrackCard from "../components/TrackCard";
 import { SpotifyContext } from "../contexts/SpotifyContext";
 
@@ -62,6 +62,7 @@ const TrackProfile = () => {
     trackInfo();
   }, [trackId]);
 
+  console.log("track", track);
   return (
     <>
       {errorMessage ? (
@@ -69,7 +70,7 @@ const TrackProfile = () => {
       ) : undefined}
       {track ? (
         <div style={{ textAlign: "center" }}>
-          <TrackCard track={track} />
+          <TrackCard track={track} album={track.album} />
 
           {isLoading ? (
             <div className="lds-spinner" style={{ margin: "2em" }}>

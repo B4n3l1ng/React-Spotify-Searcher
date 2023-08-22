@@ -1,7 +1,7 @@
 import { Carousel } from "@mantine/carousel";
-import { Button, Card, CardSection, Image, Text, Title } from "@mantine/core";
+import { Button, Card, Image, Text, Title } from "@mantine/core";
 import axios from "axios";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TrackCard from "../components/TrackCard";
 import { SpotifyContext } from "../contexts/SpotifyContext";
